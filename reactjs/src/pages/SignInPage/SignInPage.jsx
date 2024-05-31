@@ -13,7 +13,7 @@ import axios from "axios"
 import {useUserMutation} from '../../hooks/userMutationHook'
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 import *as message from '../../components/Message/Message';
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from 'jwt-decode';
 import {useDispatch} from 'react-redux';
 import { updateUser } from '../../redux/slides/userSlide';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
@@ -69,7 +69,7 @@ const SignInPage = () => {
           localStorage.setItem('access_token', JSON.stringify(data?.access_token))
           localStorage.setItem('refresh_token', JSON.stringify(data?.refresh_token))
           if(data?.access_token){
-            const decoded = jwt_decode(data?.access_token)
+            const decoded = jwtDecode(data?.access_token)
             console.log('decoded', decoded)
             if(decoded?.id){
               handleGetDetailsUser(decoded?.id, data?.access_token)

@@ -14,7 +14,7 @@ import {
   // QueryClient,
   // QueryClientProvider,
 } from 'react-query'
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from 'jwt-decode';
 import { isJsonString } from './Utils';
 import * as UserService from './Service/UserService';
 import { resetUser, updateUser } from './redux/slides/userSlide'
@@ -44,7 +44,7 @@ function App() {
     let decoded = {}
     if(storageData && isJsonString(storageData)) {
       storageData = JSON.parse(storageData);
-      decoded = jwt_decode(storageData)
+      decoded = jwtDecode(storageData)
     }
     return {decoded, storageData}
   }
@@ -54,7 +54,7 @@ function App() {
     const { decoded } = handleDecoded()
     let storageRefreshToken = localStorage.getItem('refresh_token')
     const refreshToken = JSON.parse(storageRefreshToken)
-    const decodedRefreshToken =  jwt_decode(refreshToken)
+    const decodedRefreshToken = jwtDecode(refreshToken)
     if(decoded?.exp < currentTime.getTime()/1000){
       if(decodedRefreshToken?.exp > currentTime.getTime() / 1000) {
         // const data = await UserService.refreshToken(refreshToken)
